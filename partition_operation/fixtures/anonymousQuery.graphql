@@ -1,0 +1,24 @@
+{ 
+  myQuery {
+    id
+    foo: bar { ...MyFragment }
+    baz
+    bak {
+      alpha
+      beta {
+        aleph
+        beth
+      }
+    }
+  }
+}
+
+fragment MyFragment on Something {
+  id
+  quux
+  quuy { 
+    id
+    quuz
+  }
+}
+

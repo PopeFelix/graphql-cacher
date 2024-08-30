@@ -1,0 +1,31 @@
+query MatchupAnalysisQuery(
+   $homeTeamAbbrev: String!
+   $awayTeamAbbrev: String!
+   $sportType: GameSportTypeEnumType!
+   $poolId: ID
+   $weekNumber: Int
+   $gameInstanceUid: String
+ ) {
+   matchupAnalysis(
+     homeTeamAbbrev: $homeTeamAbbrev
+     awayTeamAbbrev: $awayTeamAbbrev
+     sportType: $sportType
+     poolId: $poolId
+     weekNumber: $weekNumber
+     gameInstanceUid: $gameInstanceUid
+   ) {
+     somePrediction {
+       id
+       isSubscriber
+       hasGameAnalysis
+       matchupNote(format: TEXT)
+       upsellCopy(format: TEXT)
+       pickedTeamAbbrev
+       confidencePercent
+       projectedHomeTeamScore
+       projectedAwayTeamScore
+       spreadCoverAnalysis
+       subUrl
+     }
+   }
+ }

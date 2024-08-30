@@ -1,0 +1,34 @@
+[package]
+name = "graphql-cacher"
+version = "0.8.2"
+authors = ["Aurelia Peters <popefelix@gmail.com>"]
+edition = "2018"
+repository = "https://github.com/PopeFelix/graphql-cacher"
+description = "A Fastly Compute@Edge app to cache Picks GraphQL requests via the Fastly CDN"
+readme = "README.md"
+
+# Remove this line if you want to be able to publish this crate as open source on crates.io.
+# Otherwise, `publish = false` prevents an accidental `cargo publish` from revealing private source.
+publish = false
+
+[profile.release]
+debug = 1
+
+[dependencies]
+fastly = "0.9.1"
+log-fastly = "0.9.1"
+serde_json = "1.0.85"
+serde = "1.0.145"
+duplicate = "0.4.1"
+regex = "1.5.4"
+log = "0.4.17"
+lazy_static = "1.4.0"
+tracing = "0.1.36"
+tracing-subscriber = { version = "0.3.8", features = ["json", "fmt"] }
+enum-map = "2.0.0"
+itertools = "0.10.3"
+anyhow = "1.0.53"
+uuid = { version = "1.1.2", features = ["v4"] }
+partition_operation = { path = "partition_operation" }
+graphql-parser = "0.4.0"
+tempus_fugit = "0.11.0"

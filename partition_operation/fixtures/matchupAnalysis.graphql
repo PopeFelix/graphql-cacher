@@ -1,0 +1,234 @@
+query MatchupAnalysisQuery(
+   $homeTeamAbbrev: String!
+   $awayTeamAbbrev: String!
+   $sportType: GameSportTypeEnumType!
+   $poolId: ID
+   $weekNumber: Int
+   $gameInstanceUid: String
+ ) {
+   matchupAnalysis(
+     homeTeamAbbrev: $homeTeamAbbrev
+     awayTeamAbbrev: $awayTeamAbbrev
+     sportType: $sportType
+     poolId: $poolId
+     weekNumber: $weekNumber
+     gameInstanceUid: $gameInstanceUid
+   ) {
+     id
+     homeTeamAnalysis: teamAnalysis(teamAbbrev: $homeTeamAbbrev, opponentAbbrev: $awayTeamAbbrev, sportType: $sportType) {
+       ...MaTeamInfo
+     }
+     awayTeamAnalysis: teamAnalysis(teamAbbrev: $awayTeamAbbrev, opponentAbbrev: $homeTeamAbbrev, sportType: $sportType) {
+       ...MaTeamInfo
+     }
+     teamComparisonOrder
+     teamStatsOrder
+     somePrediction {
+       id
+       isSubscriber
+       hasGameAnalysis
+       matchupNote(format: TEXT)
+       upsellCopy(format: TEXT)
+       pickedTeamAbbrev
+       confidencePercent
+       projectedHomeTeamScore
+       projectedAwayTeamScore
+       spreadCoverAnalysis
+       subUrl
+     }
+     expertPicks {
+       gameData {
+         againstTheSpread {
+           expertUserName
+           expertId
+           pick
+           pickSide
+         }
+         straightUp {
+           expertUserName
+           expertId
+           pick
+           pickSide
+         }
+         line
+       }
+       expertsData {
+         expertId
+         userName
+         name
+         byLine
+         imageUrl
+         recordData {
+           weekRecord {
+             straightUp {
+               correct
+               incorrect
+               push
+               total
+               percentage
+             }
+             againstTheSpread {
+               correct
+               incorrect
+               push
+               total
+               percentage
+             }
+           }
+           seasonRecord {
+             straightUp {
+               correct
+               incorrect
+               push
+               total
+               percentage
+             }
+             againstTheSpread {
+               correct
+               incorrect
+               push
+               total
+               percentage
+             }
+           }
+         }
+       }
+     }
+     event {
+       id
+       weather {
+         id
+         description
+         icon
+         formattedFahrenheitTemperature
+         temperature
+         isMetric
+       }
+       venueInformation {
+         id
+         stadiumName
+         stadiumCity
+         stadiumState
+       }
+       oddsMarket {
+         id
+         bookUsed {
+           id
+           name
+         }
+         moneyLines {
+           id
+           teamId
+           odds
+         }
+         totals {
+           id
+           choice
+           odds
+           # openingTotal # currently crapping out request
+           total
+         }
+         spreads {
+           id
+           teamId
+           odds
+         }
+       }
+     }
+   }
+ }
+ fragment MaTeamInfo on MatchupAnalysisTeamAnalysis {
+   id
+   userPickPercent
+   someTeamAnalysis {
+     allGamesRecord {
+       spread
+     }
+   }
+   rank
+   teamBlurb(format: TEXT)
+   team {
+     id
+     abbrev
+     wins
+     losses
+     ties
+     mediumName
+     sportType
+     colorHexDex
+     conferenceName
+     conferenceAbbrev
+   }
+   teamComparison {
+     id
+     label
+     key
+     formattedValue
+     rank
+     isInverted
+   }
+   previousGames(limit: 10) {
+     id
+     record
+     homeRecord
+     awayRecord
+     neutralRecord
+     games {
+       homeTeam {
+         id
+         mediumName
+         abbrev
+         sportType
+       }
+       awayTeam {
+         id
+         mediumName
+         abbrev
+         sportType
+       }
+       homeTeamScore
+       awayTeamScore
+       gamePeriod
+     }
+   }
+   situationalStatistics {
+     id
+     label
+     key
+     formattedValue
+   }
+   hasStats
+   teamStatistics {
+     id
+     label
+     key
+     formattedValue
+     normalizedValue
+     isInverted
+     rank
+   }
+   keyPlayers(limit: 1) {
+     id
+     name
+     positionAbbrev
+     keyStats {
+       id
+       label
+       formattedValue
+     }
+   }
+   injuredPlayers(limit: 5) {
+     id
+     name
+     imgUrl
+     positionAbbrev
+     estReturn
+     injuryStatus
+     injuryType
+     keyStats {
+       id
+       label
+       formattedValue
+     }
+   }
+ }

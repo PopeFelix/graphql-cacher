@@ -1,0 +1,15 @@
+# This file describes a Fastly Compute@Edge package. To learn more visit:
+# https://developer.fastly.com/reference/fastly-toml/
+
+authors = ["Aurelia Peters"]
+description = "An application that caches the individual parts of GraphQL queries"
+language = "rust"
+manifest_version = 2
+name = "graphql-cacher"
+service_id = "DEMO_SERVICE_ID"
+[local_server]
+  [local_server.backends]
+    [local_server.backends.MAIN_GRAPHQL]
+      url = "https://backend.host.tld/graphql"
+    [local_server.backends.MAIN_BYPASS]
+      url = "https://backend-bypass.host.tld"
